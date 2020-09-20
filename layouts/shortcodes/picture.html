@@ -1,0 +1,6 @@
+<picture>
+    {{ $dir := path.Dir ( .Get "basename" ) }}
+    {{ $base := path.Base ( .Get "basename" ) }}
+    <source srcset="{{ range (readDir $dir ) }}{{ if (and ( hasPrefix .Name $base ) ( eq (path.Ext .Name) ".webp" )) }}{{ $width := ( substr .Name (add (len $base ) 1) -5 ) }}{{ $url := ((path.Join $dir .Name)) }}{{ substr $url 7 (len $url) }} {{ $width }}w,{{ end }}{{ end }}">
+    <img src="{{ substr (.Get "basename") 7 (len (.Get "basename")) }}.jpg" alt="{{ .Get "alt" }}" />
+</picture>
