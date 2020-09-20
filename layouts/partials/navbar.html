@@ -1,8 +1,14 @@
-<div class="page-top animated fadeInDown">
-    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+<div class="page-top">
+    <div class="title">
+        <h3 title=""><a href="/">{{ .Site.Params.Title }}</a></h3>
+    </div>
+    {{ if .Site.IsMultiLingual }}
+    <a role="button" class="navbar-translate navbar-toggle" data-untarget="navMenu" data-target="navTranslations" aria-label="translate" aria-expanded="false">
+        <img class="navbar" src="{{ " /assets/svg/material/regular/translate.svg " }}" aria-hidden="true" />
+    </a>
+    {{ end }}
+    <a role="button" class="navbar-burger navbar-toggle" data-target="navMenu" data-untarget="navTranslations" aria-label="menu" aria-expanded="false">
+        <img class="navbar" src="{{ " /assets/svg/fa/solid/bars.svg " }}" aria-hidden="true" />
     </a>
     <ul class="nav" id="navMenu">
         {{ $url := .RelPermalink }}
@@ -16,17 +22,17 @@
                         {{ end }}
                    title="{{ .Title }}">{{ .Name }}</a></li>
         {{ end }}
-        {{ if .Site.IsMultiLingual }}
-            {{ range $.Site.Home.AllTranslations }}
-                <li><a href="{{ .Permalink }}"
-                       title="{{ .Language.LanguageName }}">{{ .Language.LanguageName }}</a>
-                </li>
-            {{ end }}
-        {{ end }}
         <li class="theme-switch-item">
             <a class="theme-switch" title="Switch Theme">
-                <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+                <img class="navbar" src="{{ " /assets/svg/fa/solid/adjust.svg " }}" aria-hidden="true" />
             </a>
         </li>
     </ul>
+    {{ if .Site.IsMultiLingual }}
+    <ul class="translations" id="navTranslations">
+        {{ range $.Site.Home.AllTranslations }}
+        <li><a href="{{ .Permalink }}" title="{{ .Language.LanguageName }}" id="{{ .Language }}">{{ .Language.LanguageName }}</a></li>
+        {{ end }}
+    </ul>
+    {{ end }}
 </div>

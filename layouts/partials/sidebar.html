@@ -1,7 +1,12 @@
-<div class="sidebar animated fadeInDown">
+<div class="sidebar">
     <div class="logo-title">
         <div class="title">
-            <img src="{{ .Site.Params.profilePicture | absURL }}" alt="profile picture">
+            <picture>
+                {{ $dir := path.Dir .Site.Params.profilePicture }}
+                {{ $base := path.Base .Site.Params.profilePicture }}
+                <source srcset="{{ range (readDir $dir ) }}{{ if (and ( hasPrefix .Name $base ) ( eq (path.Ext .Name) ".webp" )) }}{{ $width := ( substr .Name (add (len $base ) 1) -5 ) }}{{ $url := ((path.Join $dir .Name)) }}{{ substr $url 7 (len $url) }} {{ $width }}w,{{ end }}{{ end }}">
+                <img src="{{ substr .Site.Params.profilePicture 7 (len .Site.Params.profilePicture) }}.jpg" alt="Profile picture" />
+            </picture>
             <h3 title=""><a href="/">{{ .Site.Params.Title }}</a></h3>
             <div class="description">
                 <p>{{ .Site.Params.description }}</p>
@@ -11,13 +16,11 @@
     <ul class="social-links">
         {{ range $item := .Site.Params.socialIcons }}
             <li>
-                <a href="{{ $item.url }}" rel="me" aria-label="{{ $item.title }}">
-                    <i class="fa fa-2x {{ $item.icon }}" aria-hidden="true"></i>
+                <a href="{{ $item.url }}" rel="me" aria-label="{{ $item.title }}" rel="noopener">
+                    <img class="social" src="{{ $item.icon }}" aria-hidden="true"></img>
                 </a>
             </li>
         {{ end }}
     </ul>
-    <div class="footer">
-        <div class="by_farbox">&copy; {{ .Site.Params.author }} {{ now.Format "2006"}} </div>
-    </div>
+    <div class="footer">&copy; {{ .Site.Params.author }} {{ now.Format "2006"}}</div>
 </div>

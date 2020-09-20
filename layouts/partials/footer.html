@@ -1,18 +1,8 @@
-{{ $js := resources.Get "js/jquery.js" }}
-{{ $secureJS := $js |  resources.Minify | resources.Fingerprint }}
-<script type="text/javascript"
-        src="{{ $secureJS.Permalink }}"
-        integrity="{{ $secureJS.Data.Integrity }}"
-        crossorigin="anonymous"></script>
-{{ $migrate := resources.Get "js/jquery-migrate.js" }}
-{{ $appear := resources.Get "js/jquery-appear.js" }}
-{{ $js := slice $migrate $appear | resources.Concat "js/bundle.js" }}
-{{ $secureJS := $js |  resources.Minify | resources.Fingerprint }}
-<script type="text/javascript"
-        src="{{ $secureJS.Permalink }}"
-        integrity="{{ $secureJS.Data.Integrity }}"
-        crossorigin="anonymous"></script>
+<div class="copyright-footer">
+    <div class="small">This site uses icons from <a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="noreferrer">FontAwesome</a> and <a href="https://github.com/google/material-design-icons" target="_blank" rel="noreferrer">Google</a> licensed under
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC-BY-4.0</a> and <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank" rel="noreferrer">Apache v2.0</a> respectively</div>
+</div>
 
-{{- partial "medium-zoom.html" . -}}
-{{- partial "math.html" . -}}
-{{- template "_internal/google_analytics_async.html" . -}}
+{{ if and .Site.Params.matomo.enable .Site.Params.matomo.enableImg }}
+<p style="display:none;"><img src="{{ .Site.Params.matomo.url }}{{ .Site.Params.matomo.scriptName }}.php?idsite={{ .Site.Params.matomo.siteId }}&amp;rec=1" style="border:0;" alt="" /></p>
+{{ end }}

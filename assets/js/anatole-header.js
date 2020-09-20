@@ -43,22 +43,24 @@ function switchTheme(e) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var themeSwitcher = document.querySelector('.theme-switch');
     themeSwitcher.addEventListener('click', switchTheme, false);
 }, false);
 
-document.addEventListener("DOMContentLoaded", function () {
-// Get all "navbar-burger" elements
-    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
-// Check if there are any navbar burgers
-    if ($navbarBurgers.length > 0) {
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all "navbar-toggle" elements
+    var $navbarToggles = Array.prototype.slice.call(document.querySelectorAll(".navbar-toggle"), 0);
+    // Check if there are any navbar toggles
+    if ($navbarToggles.length > 0) {
         // Add a click event on each of them
-        $navbarBurgers.forEach(function ($el) {
-            $el.addEventListener("click", function () {
+        $navbarToggles.forEach(function($el) {
+            $el.addEventListener("click", function() {
+                var untarget = $el.dataset.untarget;
+                var $untarget = document.getElementById(untarget);
+                $untarget.classList.remove("is-active");
                 var target = $el.dataset.target;
                 var $target = document.getElementById(target);
-                $el.classList.toggle("is-active");
                 $target.classList.toggle("is-active");
             });
         });

@@ -1,14 +1,11 @@
 <head>
-    <title> {{.Site.Params.author}}{{ with .Title }} | {{ . }}{{ end }} </title>
+    <title> {{.Site.Params.title}}{{ with .Title }} | {{ . }}{{ end }} </title>
 
     <!-- Meta -->
     <meta charset="utf-8">
     {{- hugo.Generator -}}
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="description" content="{{ .Site.Params.description }}">
-    {{- if .Site.Params.googleSiteVerify }}
-    <meta name="google-site-verification" content="{{ .Site.Params.googleSiteVerify }}">
-    {{- end -}}
 
     <!-- CSS -->
     {{ $style := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
@@ -26,8 +23,6 @@
           crossorigin="anonymous"
           type="text/css">
     {{- end -}}
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{ .Site.Params.favicon | absURL }}favicon.ico" type="image/x-icon">
@@ -74,6 +69,32 @@
             crossorigin="anonymous"></script>
     {{- end -}}
 
-    <!-- Twitter Cards -->
-    {{ template "_internal/twitter_cards.html" . }}
+    <!-- Matomo -->
+    {{ if and .Site.Params.matomo.enable .Site.Params.matomo.enableJs }}
+    <script type="text/javascript">
+        var _paq = window._paq || []; {
+            {
+                range.Site.Params.matomo.list
+            }
+        }
+        _paq.push(["{{ .option }}"]); {
+            {
+                end
+            }
+        }
+        (function() {
+            var u = "{{ .Site.Params.matomo.url }}";
+            _paq.push(['setTrackerUrl', u + '{{ .Site.Params.matomo.scriptName }}.php']);
+            _paq.push(['setSiteId', '{{ .Site.Params.matomo.siteId }}']);
+            var d = document,
+                g = d.createElement('script'),
+                s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript';
+            g.async = true;
+            g.defer = true;
+            g.src = u + '{{ .Site.Params.matomo.scriptName }}.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    {{ end }}
 </head>
